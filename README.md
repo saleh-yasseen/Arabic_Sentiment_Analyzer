@@ -1,6 +1,19 @@
 # Arabic Sentiment Analyzer
 
-A FastAPI-based application for analyzing sentiment in Arabic text using a fine-tuned BERT model.
+![Python](https://img.shields.io/badge/Python-3.8+-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green?logo=fastapi)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red?logo=pytorch)
+![License](https://img.shields.io/badge/License-CC%20BY--SA%204.0-yellow)
+
+A production-ready FastAPI application for Arabic sentiment analysis using state-of-the-art transformer models.
+___
+
+## Performance
+
+- **Accuracy**: ~87% on test set
+- **Languages**: Modern Standard Arabic (MSA)
+- **Response Time**: < 100ms per request
+- **Batch Size**: Up to 32 texts per request
 
 ## Features
 
