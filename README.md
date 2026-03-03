@@ -32,7 +32,7 @@ ___
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone <[repository-url](https://github.com/saleh-yasseen/Arabic_Sentiment_Analyzer)>
 cd arabic_sentiment_analyzer
 ```
 
