@@ -2,12 +2,21 @@ import transformers
 from transformers import pipeline
 import torch
 
+
 class ArabicSentimentAnalyzer:
     def __init__(self):
+        from pathlib import Path
+        if Path("model").exists():
+            print("Model already exists, loading...")
+        else:
+            print("Model not found, downloading...")
+            from huggingface_hub import snapshot_download
+            snapshot_download(repo_id="CAMeL-Lab/bert-base-arabic-camelbert-mix-sentiment", local_dir="model")
+            print("Model downloaded successfully!")
         print("Loading model...")
         self.classifier = pipeline(
             "sentiment-analysis",
-            model="CAMeL-Lab/bert-base-arabic-camelbert-msa-sentiment"
+            model="model"
         )
         print("Model loaded successfully!")
     
@@ -20,7 +29,7 @@ class ArabicSentimentAnalyzer:
             'text': text,
             'sentiment': result['label'],
             'confidence':round(result['score'],4),
-            'confident': result['score'] > 0.8
+            'confident': result['score'] > 0.8  
         }
     
     def analyze_batch(self, texts):
@@ -74,4 +83,5 @@ def interactive():
                 print("high confidence prediction")
             else:
                 print("low confidence model is not certain")
-interactive()
+if __name__ == "__main__":
+    interactive()

@@ -1,0 +1,115 @@
+{
+  "info": {
+    "name": "Arabic Sentiment Analyzer API",
+    "description": "Collection for testing the Arabic Sentiment Analyzer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8000/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "Analyze Single Text - Positive",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"أنا سعيد جدًا اليوم وأشعر بالإيجابية!\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/analyze",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["analyze"]
+        }
+      }
+    },
+    {
+      "name": "Analyze Single Text - Negative",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"أنا حزين جدًا وأشعر بالإحباط واليأس!\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/analyze",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["analyze"]
+        }
+      }
+    },
+    {
+      "name": "Analyze Single Text - Neutral",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"الطقس اليوم غائم وبارد\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/analyze",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["analyze"]
+        }
+      }
+    },
+    {
+      "name": "Analyze Batch - Multiple Texts",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"texts\": [\n    \"أنا سعيد جدًا اليوم!\",\n    \"أنا حزين وحيد!\",\n    \"الطقس اليوم عادي\"\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/analyze/batch",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["analyze", "batch"]
+        }
+      }
+    }
+  ]
+}
