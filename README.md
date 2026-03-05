@@ -32,7 +32,7 @@ ___
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/saleh-yasseen/Arabic_Sentiment_Analyzer
 cd arabic_sentiment_analyzer
 ```
 
@@ -149,4 +149,22 @@ This project uses the CAMeL-Lab BERT model which is available under the CC BY-SA
 
 ## Contributing
 
-Feel free to submit issues and enhancements!
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## Contact
+
+**Saleh Ashref**
+- GitHub: [@saleh-yasseen](https://github.com/saleh-yasseen)
+- LinkedIn: [saleh-yassien](https://www.linkedin.com/in/saleh-yassien-b16256202/)
+- Email: salehyassien0@gmail.com
+
+---
