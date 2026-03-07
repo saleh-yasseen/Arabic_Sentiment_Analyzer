@@ -139,3 +139,14 @@ with tab1:
                     st.error("Failed to connect to the API. Please ensure the API is running.")
                 except Exception as e:
                     st.error(f"An error occurred: {str(e)}")
+with tab2:
+    st.header("analyze multible texts")
+
+    batch_input = st.text_area(
+        "Enter multiple Arabic texts (one per line):",
+        height =200,
+        placeholder="اول نص\nثاني نص\nثالث نص"
+    )
+    col1, col2, col3 = st.columns([1,5])
+    with col1:
+        batch_btn = st.button("analyze batch",type="primary")
