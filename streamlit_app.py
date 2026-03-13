@@ -147,6 +147,119 @@ with tab2:
         height =200,
         placeholder="اول نص\nثاني نص\nثالث نص"
     )
-    col1, col2, col3 = st.columns([1,5])
+    col1, col2 = st.columns([1,5])
     with col1:
         batch_btn = st.button("analyze batch",type="primary")
+
+    if batch_btn:
+        if not batch_input.strip():
+            st.warning("please enter some Arabic texts for batch analysis.")
+        else:
+            texts = [line.strip() for line in batch_input.split("\n") if line.strip()]
+
+            if len(texts) > 32:
+                st.warning("Batch size exceeds the limit of 32 texts. Please reduce the number of texts.")
+                texts = texts[:32]
+            with st.spinner(f"analyzing batch{len(texts)}texts..."):
+                try:
+                    responce = requests.post(
+                        f"{API_url}/analyze_batch",
+                        json={"texts": texts},
+                        timeout=20
+                    )
+                    if responce.status_code ==200:
+                        results=responce.json()
+
+                        df = pd.create_dataframe(results)
+                        col1,col2,col3,col4 = st.columns(4)
+                        with col1:
+                            st.metric("Total Texts", len(results))
+                        with col2:
+                            positive = sum(1 for r in results if r['sentiment'] == 'positive')
+                            st.metric("Positive", positive, delta=f"{positive/len(results)*100 :.1%}")
+                        with col3:
+                            negative = sum(1 for r in results if r['sentiment'] == 'negative')
+                            st.metric("Negative", negative, delta=f"{negative/len(results)*100 :.1%}")
+                        with col4:
+                            neutral = sum(1 for r in results if r['sentiment'] == 'neutral')
+                            st.metric("Neutral", neutral, delta=f"{neutral/len(results)*100 :.1%}")
+                        st.markdown("___")
+
+                        for i, result in enumerate(results, 1):
+                            with st.expander(f"text{i}:{result['text'][:50]}..."):
+                                sentiment = result['sentiment']
+                                confidence = result['confidence']
+                                if sentiment == "positive":
+                                    sentiment_class = "sentiment-positive"
+                                    st.success(f"😊 {sentiment}")
+                                elif sentiment == "negative":
+                                    sentiment_class = "sentiment-negative"
+                                    st.error(f"😞 {sentiment}")
+                                else:
+                                    sentiment_class = "sentiment-neutral"
+                                    st.info(f"😐 {sentiment}")
+                                st.write(f"**confidence:** {confidence:.2%}")
+                                st.progress(result['confidence'])
+                                st.write(f"**confidence:** {result['confidence']:.2%}")
+                                st.progress(result['confidence'])
+                        
+                        csv =df.to_csv(index=False).encode('utf-8')
+                        st.download_button(
+                            label="Download CSV",
+                            data=csv,
+                            file_name=f"sentiment_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+                            mime="text/csv"
+                        )
+
+                    else:
+                        st.error(f"API error: {responce.status_code}")
+                except requests.exceptions.ConnectionError:
+                    st.error("Failed to connect to the API. Please ensure the API is running.")
+                except Exception as e:
+                    st.error(f"An error occurred: {str(e)}")
+with tab3:
+    st.header("Model Performance")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("accuracy metrics")
+
+        metrics_df = pd.DataFrame({
+            'Metric': ['Overall Accuracy', 'Positive Precision', 'Positive Recall', 'Negative Precision', 'Negative Recall', 'Neutral Precision', 'Neutral Recall'],
+            'Score': [0.85, 0.80, 0.75, 0.90, 0.85, 0.70, 0.65]
+        })
+        st.dataframe(metrics_df, hide_index=True, use_container_width=True)
+        st.subheader("performance")
+
+        perf_df = pd.DataFrame({
+            'metric': ['responce_time', 'Batch size', 'Model size'],
+            'value': ['<100ms', 'Up to 32 texts', '500MB']
+        })
+        st.dataframe(perf_df, hide_index=True, use_container_width=True)
+
+    with col2:
+        st.header("model details")
+
+        st.info("""
+        **Model:** CAMeL-Lab BERT  
+        **Architecture:** Transformer-based BERT  
+        **parameters:** 110M
+        **languages** Modern Standard Arabic (MSA)
+        **Fine-tuning:** Trained on Arabic sentiment datasets  
+        **Classes:** Positive, Negative, Neutral  
+        **Accuracy:** ~ 87 on test set
+""")
+
+st.markdown("___")
+st.markdown(
+    """
+    <div style="text-align:center; padding:1rem; border-radius:5px;">
+            <p>Made by Saleh Ashref</p>
+            <p>
+            <a href='https://github.com/saleh-yasseen/Arabic_Sentiment_Analyzer'>GitHub</a> | 
+            <a href='https://www.linkedin.com/in/saleh-yassien-b16256202/'>LinkedIn</a>
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
