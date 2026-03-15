@@ -47,6 +47,30 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
+## Docker Setup
+
+### Prerequisites
+- Docker and Docker Compose installed
+
+### Running with Docker
+
+1. Build and run the services:
+```bash
+docker-compose up --build
+```
+
+2. Access the applications:
+- **Streamlit App**: http://localhost:8501
+- **FastAPI API**: http://localhost:8000
+
+The Streamlit app will automatically connect to the API running in the container.
+
+### Stopping the Services
+
+```bash
+docker-compose down
+```
+
 ## Usage
 
 ### Running the API
@@ -105,9 +129,13 @@ The API will be available at `http://localhost:8000`
 arabic_sentiment_analyzer/
 ├── main.py                          # FastAPI application
 ├── Arabic_sentiment_analyzer_App.py  # Sentiment analyzer class
+├── streamlit_app.py                 # Streamlit web interface
 ├── Postman_Collection.json          # Postman API collection
 ├── sentiment_analyzer.ipynb         # Jupyter notebook experiments
 ├── requirements.txt                 # Project dependencies
+├── Dockerfile                       # Docker container configuration
+├── docker-compose.yml               # Docker Compose orchestration
+├── .dockerignore                    # Docker ignore rules
 ├── README.md                        # This file
 ├── .gitignore                       # Git ignore rules
 └── model/                           # Model files (auto-downloaded)
@@ -126,6 +154,9 @@ arabic_sentiment_analyzer/
 - **torch**: Deep learning framework
 - **huggingface-hub**: Download models from Hugging Face
 - **uvicorn**: ASGI web server
+- **streamlit**: Web app framework for data apps
+- **requests**: HTTP library for API calls
+- **pandas**: Data manipulation library
 
 ## Testing
 

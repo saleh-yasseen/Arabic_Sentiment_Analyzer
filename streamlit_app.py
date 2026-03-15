@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 from datetime import datetime
+import os
 
 st.set_page_config(page_title="Arabic sentiment analyzer",page_icon="", layout="wide")
 st.markdown("""
@@ -62,7 +63,7 @@ with st.sidebar:
     - [LinkedIn](https://www.linkedin.com/in/saleh-yassien-b16256202/)
     """)
 
-API_url ="http://localhost:8000"
+API_url = os.environ.get('API_URL', 'http://localhost:8000')
 
 try:
     response = requests.get(API_url,timeout=2)
