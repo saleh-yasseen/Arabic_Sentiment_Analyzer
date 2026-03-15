@@ -1,7 +1,4 @@
-import transformers
 from transformers import pipeline
-import torch
-
 
 class ArabicSentimentAnalyzer:
     def __init__(self):
